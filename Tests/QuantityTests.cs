@@ -10,8 +10,6 @@ namespace Tests
 {
     public class QuantityTests : TestSetup
     {
-
-
         //* Adding an item without an explicit quantity results in a quantity of 1 for the item
         //* After adding a single item to an empty basket, both the basket and item quantity are 1
         //* After adding two items with different quantities to an empty basket, both the basket and item quantities are correct
