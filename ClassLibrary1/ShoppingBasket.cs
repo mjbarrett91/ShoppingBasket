@@ -8,7 +8,7 @@ namespace ShoppingBasket
 {
     public class ShoppingBasket : IShoppingBasket
     {
-        public IEnumerable<IShoppingBasketItem> Items => throw new NotImplementedException();
+        public IEnumerable<IShoppingBasketItem> Items => new List<IShoppingBasketItem>(); //Just to start
 
         public decimal SubTotal => throw new NotImplementedException();
 
