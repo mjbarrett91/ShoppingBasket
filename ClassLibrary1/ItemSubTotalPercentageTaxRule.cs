@@ -1,7 +1,7 @@
 ﻿using ShoppingBasket.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace ShoppingBasket
 {
@@ -10,7 +10,6 @@ namespace ShoppingBasket
         // TODO:Please provide the implementation of this type to calculate the tax as a percentage of the sub total for the item
         public decimal CalculateTax(IShoppingBasket basket, IShoppingBasketItem item)
         {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using ShoppingBasket.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace ShoppingBasket
@@ -20,8 +19,31 @@ namespace ShoppingBasket
 
         public IShoppingBasketItem AddItem(IShoppingItem item)
         {
-            throw new NotImplementedException();
+            var itemList = Items.ToList();
+            var itemExists = false;
+
+            foreach (var x in itemList)
+            {
+                if (x.Id == item.Id)
+                {
+                    x.Quantity = 1;
+                    itemExists = true;
+                }
+            }
+
+            //Convert Item to IShoppingBasketItem
+            var newItem = new ShoppingBasketItem() as IShoppingBasketItem;
+            
+            //newItem.Id = item.Id; // Readonly can't set
+
+            if (!itemExists)
+            {
+                itemList.Add(item);
+            }
+
+            return newBasketItem;
         }
+
 
         public IShoppingBasketItem AddItem(IShoppingItem item, int quantity)
         {
