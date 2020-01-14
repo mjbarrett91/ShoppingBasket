@@ -10,13 +10,18 @@ namespace ShoppingBasket
         public IEnumerable<IShoppingBasketItem> Items => Basket;
         private List<IShoppingBasketItem> Basket;
 
-        public decimal SubTotal => throw new NotImplementedException();
+        public decimal SubTotal => GetBasketSubTotal();
 
-        public decimal Tax => throw new NotImplementedException();
+        public decimal Tax => GetBasketTax();
 
-        public decimal Total => throw new NotImplementedException();
+        public decimal Total => GetBasketTotal();
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
+
+        public ShoppingBasket()
+        {
+            Basket = new List<IShoppingBasketItem>();
+        }
 
         public IShoppingBasketItem AddItem(IShoppingItem item)
         {
@@ -55,8 +60,6 @@ namespace ShoppingBasket
                 //Updated();
                 return itemExists;
             }
-
-
             Basket.Add(itemToAdd);
             //Updated();
             return itemToAdd;
@@ -65,8 +68,7 @@ namespace ShoppingBasket
         public IShoppingBasketItem RemoveItem(IShoppingBasketItem item)
         {
             Basket = Items?.ToList() ?? new List<IShoppingBasketItem>();
-            var itemToRemove = new ShoppingBasketItem(item) as IShoppingBasketItem;
-            var itemExists = Basket.Find(x => x.Id == itemToRemove.Id);
+            var itemExists = Basket.Find(x => x.Id == item.Id);
             if (itemExists != null)
             {
                 Basket.Remove(itemExists);
@@ -74,10 +76,42 @@ namespace ShoppingBasket
                 return itemExists;
             }
 
-            Basket.Add(itemToRemove);
+            Basket.Add(item);
             //Updated();
-            return itemToRemove;
+            return item;
+        }
+        private decimal GetBasketSubTotal()
+        {
+            var subTotal = new decimal(0);
+            foreach (var basketItems in Items)
+            {
+                subTotal += basketItems.Quantity * 1; //basketItems.Price????? // No Price exists anywhere?
+            }
+            return subTotal;
         }
 
+        private decimal GetBasketTotal()
+        {
+            var subTotal = GetBasketSubTotal();
+            var tax = GetBasketTax();
+            var total = subTotal + tax;
+
+            return total;
+        }
+
+        private decimal GetBasketTax()
+        {
+            var tax = new decimal(0);
+            foreach (var basketItems in Items)
+            {
+                foreach (var taxRule in basketItems.TaxRules)
+                {
+                    var percent = basketItems.TaxRules;
+                    tax += basketItems.Quantity * (taxRule * 1); //basketItems.Price????? // No Price exists anywhere?
+
+                }
+            }
+            return tax;
+        }
     }
 }

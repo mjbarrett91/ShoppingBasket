@@ -8,12 +8,6 @@ namespace ShoppingBasket
     {
         public long Id => 1;
         public string Name => "Cheddar";
-        public IEnumerable<ITaxRule> TaxRules
-        {
-            get
-            {
-                return tax.TaxRules.NoTax as List<ITaxRule>;
-            }
-        }
+        public IEnumerable<ITaxRule> TaxRules => tax.TaxRules.NoTax as List<ITaxRule>;
     }
 }

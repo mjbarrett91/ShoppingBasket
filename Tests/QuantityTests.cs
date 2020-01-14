@@ -2,9 +2,8 @@ using FluentAssertions;
 using ShoppingBasket;
 using ShoppingBasket.Interfaces;
 using System;
-using Xunit;
-using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using Xunit;
 
 namespace Tests
 {
@@ -91,6 +90,36 @@ namespace Tests
             shoppingBasket.AddItem(item);
             shoppingBasket.Items.Count().Should().Be(1);
             shoppingBasket.Items.FirstOrDefault(x => x.Id == item.Id).Quantity.Should().Be(2);
+            AfterTest();
+        }
+
+        //Test Removal of Item added previously
+        [Fact]
+        public void RemoveItemAdded()
+        {
+            BeforeTest();
+            var item = new Cheddar() as IShoppingItem;
+            shoppingBasket.AddItem(item);
+            shoppingBasket.Items.Count().Should().Be(1);
+            shoppingBasket.Items.FirstOrDefault(x => x.Id == item.Id).Quantity.Should().Be(1);
+            shoppingBasket.RemoveItem(shoppingBasket.Items.FirstOrDefault());
+            shoppingBasket.Items.Count().Should().Be(0);
+            AfterTest();
+        }
+
+        //Test Removal of Item added previously
+        [Fact]
+        public void RemoveOneItemAdded()
+        {
+            BeforeTest();
+            var item = new Cheddar() as IShoppingItem;
+            var item2 = new Camembert() as IShoppingItem;
+            shoppingBasket.AddItem(item);
+            shoppingBasket.AddItem(item2);
+            shoppingBasket.Items.Count().Should().Be(2);
+            shoppingBasket.RemoveItem(shoppingBasket.Items.FirstOrDefault(x => x.Name == "Camembert"));
+            shoppingBasket.Items.Count().Should().Be(1);
+            shoppingBasket.Items.FirstOrDefault().Quantity.Should().Be(1);
             AfterTest();
         }
     }

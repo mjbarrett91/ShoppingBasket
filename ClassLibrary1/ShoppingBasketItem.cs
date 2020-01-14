@@ -8,13 +8,13 @@ namespace ShoppingBasket
 {
     public class ShoppingBasketItem : IShoppingBasketItem
     {
-        public int Quantity { get => ItemQuantity; set => ItemQuantity = value; }
+        public int Quantity { get; set; }
 
-        public long Id => ItemId;
+        public long Id { get; }
 
-        public string Name => ItemName;
+        public string Name { get; }
 
-        public IEnumerable<ITaxRule> TaxRules => ItemTaxRules;
+        public IEnumerable<ITaxRule> TaxRules { get; }
 
         public decimal SubTotal => throw new NotImplementedException();
 
@@ -24,25 +24,20 @@ namespace ShoppingBasket
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
-        private string ItemName { get; set; }
-        private long ItemId { get; set; }
-        private int ItemQuantity { get; set; }
-        private List<ITaxRule> ItemTaxRules { get; set; }
-
         public ShoppingBasketItem (IShoppingItem item)
         {
-            ItemName = item.Name;
-            ItemId = item.Id;
+            Name = item.Name;
+            Id = item.Id;
             //ItemTaxRules = item.TaxRules.ToList();
-            ItemQuantity = 1;
+            Quantity = 1;
         }
 
         public ShoppingBasketItem(IShoppingItem item, int quantity)
         {
-            ItemName = item.Name;
-            ItemId = item.Id;
+            Name = item.Name;
+            Id = item.Id;
             //ItemTaxRules = item.TaxRules.ToList();
-            ItemQuantity = quantity;
+            Quantity = quantity;
         }
     }
 }
