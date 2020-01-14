@@ -8,7 +8,7 @@ namespace ShoppingBasket
 {
     public class ShoppingBasketItem : IShoppingBasketItem
     {
-        public int Quantity { get => ItemQuantity; set => throw new NotImplementedException(); }
+        public int Quantity { get => ItemQuantity; set => ItemQuantity = value; }
 
         public long Id => ItemId;
 
@@ -35,6 +35,14 @@ namespace ShoppingBasket
             ItemId = item.Id;
             //ItemTaxRules = item.TaxRules.ToList();
             ItemQuantity = 1;
+        }
+
+        public ShoppingBasketItem(IShoppingItem item, int quantity)
+        {
+            ItemName = item.Name;
+            ItemId = item.Id;
+            //ItemTaxRules = item.TaxRules.ToList();
+            ItemQuantity = quantity;
         }
     }
 }

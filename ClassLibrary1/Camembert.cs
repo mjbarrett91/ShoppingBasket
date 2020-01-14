@@ -4,10 +4,10 @@ using tax = ShoppingBasket;
 
 namespace ShoppingBasket
 {
-    public class Cheese : IShoppingItem
+    public class Camembert : IShoppingItem
     {
-        public long Id => 1;
-        public string Name => "Cheese";
+        public long Id => 2;
+        public string Name => "Camembert";
         public IEnumerable<ITaxRule> TaxRules
         {
             get
