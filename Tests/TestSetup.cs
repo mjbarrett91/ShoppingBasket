@@ -4,11 +4,12 @@ namespace Tests
 {
     public class TestSetup
     {
-        internal readonly IShoppingBasket shoppingBasket;
-        internal readonly IShoppingBasketItem shoppingBasketItem;
+        internal IShoppingBasket shoppingBasket;
+        internal IShoppingBasketItem shoppingBasketItem;
 
         public void BeforeTest()
         {
+            shoppingBasket = new ShoppingBasket.ShoppingBasket() as IShoppingBasket;
         }
 
         public void AfterTest()

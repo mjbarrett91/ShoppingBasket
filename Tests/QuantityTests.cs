@@ -24,7 +24,19 @@ namespace Tests
             var item = new Cheese();
             shoppingBasket.AddItem(item);
             shoppingBasket.Items.Should().HaveCount(1);
-            shoppingBasketItem.Quantity.Should().Be(1);
+            shoppingBasket.Items.FirstOrDefault(x => x.Id == item.Id).Quantity.Should().Be(1);
+            AfterTest();
+        }
+
+        [Fact]
+        public void ItemQuantityChange()
+        {
+            BeforeTest();
+            var basket = new ShoppingBasket.ShoppingBasket();
+            basket.AddItem(new Cheese(), 1);
+            Console.WriteLine(basket.SubTotal);
+            basket.Items.First().Quantity = 100;
+            Console.WriteLine(basket.SubTotal);
             AfterTest();
         }
     }

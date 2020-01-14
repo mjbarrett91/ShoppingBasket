@@ -7,6 +7,6 @@ namespace ShoppingBasket
 {
     public static class TaxRules
     {
-        public readonly static ITaxRule NoTax = new ItemSubTotalPercentageTaxRule();
+        public static ITaxRule NoTax = new ItemSubTotalPercentageTaxRule();
     }
 }

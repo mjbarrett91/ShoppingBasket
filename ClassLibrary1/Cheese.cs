@@ -1,6 +1,6 @@
 ﻿using ShoppingBasket.Interfaces;
-using System;
 using System.Collections.Generic;
+using tax = ShoppingBasket;
 
 namespace ShoppingBasket
 {
@@ -8,6 +8,12 @@ namespace ShoppingBasket
     {
         public long Id => 1;
         public string Name => "Cheese";
-        public IEnumerable<ITaxRule> TaxRules => throw new NotImplementedException();
+        public IEnumerable<ITaxRule> TaxRules
+        {
+            get
+            {
+                return tax.TaxRules.NoTax as List<ITaxRule>;
+            }
+        }
     }
 }

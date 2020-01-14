@@ -7,7 +7,8 @@ namespace ShoppingBasket
 {
     public class ShoppingBasket : IShoppingBasket
     {
-        public IEnumerable<IShoppingBasketItem> Items => new List<IShoppingBasketItem>(); //Just to start
+        public IEnumerable<IShoppingBasketItem> Items => Basket;
+        private List<IShoppingBasketItem> Basket { get; set; }
 
         public decimal SubTotal => throw new NotImplementedException();
 
@@ -19,29 +20,26 @@ namespace ShoppingBasket
 
         public IShoppingBasketItem AddItem(IShoppingItem item)
         {
-            var itemList = Items.ToList();
-            var itemExists = false;
+            Basket = new List<IShoppingBasketItem>();
+            var newShoppingBasketItem = new ShoppingBasketItem(item) as IShoppingBasketItem;
 
-            foreach (var x in itemList)
+            if (Items != null)
             {
-                if (x.Id == item.Id)
+                Basket = Items.ToList();
+                var itemExists = Basket.Find(x => x.Id == item.Id);
+                if (itemExists != null)
                 {
-                    x.Quantity = 1;
-                    itemExists = true;
+                    itemExists.Quantity++;
+                    //Updated();
+                    return itemExists;
                 }
             }
+            //var newItem = new ShoppingBasketItem { Name = null, Quantity = 1, TaxRules = null }() as IShoppingBasketItem;
+            Basket.Add(newShoppingBasketItem);
+            //Updated();
+            //this.Items = itemList;
+            return newShoppingBasketItem;
 
-            //Convert Item to IShoppingBasketItem
-            var newItem = new ShoppingBasketItem() as IShoppingBasketItem;
-            
-            //newItem.Id = item.Id; // Readonly can't set
-
-            if (!itemExists)
-            {
-                itemList.Add(item);
-            }
-
-            return newBasketItem;
         }
 
 
@@ -54,5 +52,6 @@ namespace ShoppingBasket
         {
             throw new NotImplementedException();
         }
+
     }
 }
