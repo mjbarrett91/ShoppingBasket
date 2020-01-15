@@ -1,6 +1,4 @@
 ﻿using ShoppingBasket.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ShoppingBasket
@@ -16,9 +14,17 @@ namespace ShoppingBasket
         // TODO:Please provide the implementation of this type to calculate the tax as a percentage of the sub total for the item
         public decimal CalculateTax(IShoppingBasket basket, IShoppingBasketItem item)
         {
-            var itemToCalculate = basket.Items.FirstOrDefault(x => x.Id == item.Id);
-            var tax = itemToCalculate.SubTotal * Percentage; //basketItems.Price????? // No Price exists anywhere?
-            return tax;
+            if (basket != null)
+            {
+                var itemToCalculate = basket.Items.FirstOrDefault(x => x.Id == item.Id);
+                var tax = itemToCalculate.SubTotal * Percentage;
+                return tax;
+            }
+            else
+            {
+                var tax = item.SubTotal * Percentage;
+                return tax;
+            }
         }
     }
 }

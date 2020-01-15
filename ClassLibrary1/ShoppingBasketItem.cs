@@ -2,44 +2,61 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ShoppingBasket
 {
     public class ShoppingBasketItem : IShoppingBasketItem
     {
         public int Quantity { get; set; }
-
         public long Id { get; }
-
         public string Name { get; }
+        public decimal UnitPrice { get; }
+        public IEnumerable<ITaxRule> TaxRules { get => taxRules; }
+        private readonly List<ITaxRule> taxRules;
 
-        public IEnumerable<ITaxRule> TaxRules { get; }
-
-        public decimal SubTotal => throw new NotImplementedException();
-
-        public decimal Tax => throw new NotImplementedException();
-
-        public decimal Total => throw new NotImplementedException();
-
-        public decimal UnitPrice => throw new NotImplementedException();
+        public decimal SubTotal => GetItemSubTotal();
+        public decimal Tax => GetItemTax();
+        public decimal Total => GetItemTotal();
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
-        public ShoppingBasketItem (IShoppingItem item)
+        public ShoppingBasketItem(IShoppingItem item)
         {
             Name = item.Name;
             Id = item.Id;
-            //ItemTaxRules = item.TaxRules.ToList();
+            taxRules = item.TaxRules.ToList();
             Quantity = 1;
+            UnitPrice = item.UnitPrice;
         }
 
         public ShoppingBasketItem(IShoppingItem item, int quantity)
         {
             Name = item.Name;
             Id = item.Id;
-            //ItemTaxRules = item.TaxRules.ToList();
+            taxRules = item.TaxRules.ToList();
             Quantity = quantity;
+            UnitPrice = item.UnitPrice;
+        }
+
+        private decimal GetItemSubTotal()
+        {
+            return Quantity * UnitPrice;
+        }
+
+        private decimal GetItemTax()
+        {
+            var basket = new ShoppingBasket();
+            var itemTax = new decimal();
+            foreach (var taxRule in TaxRules)
+            {
+                itemTax += taxRule.CalculateTax(null, this);
+            };
+            return itemTax;
+        }
+
+        private decimal GetItemTotal()
+        {
+            return GetItemSubTotal() + GetItemTax();
         }
     }
 }

@@ -85,7 +85,7 @@ namespace ShoppingBasket
             var subTotal = new decimal(0);
             foreach (var basketItems in Items)
             {
-                subTotal += basketItems.SubTotal() * 1; //basketItems.Price????? // No Price exists anywhere?
+                subTotal += basketItems.SubTotal * 1; //basketItems.Price????? // No Price exists anywhere?
             }
             return subTotal;
         }
