@@ -24,7 +24,7 @@ namespace ShoppingBasket
         {
             Name = item.Name;
             Id = item.Id;
-            taxRules = item.TaxRules.ToList();
+            taxRules = item.TaxRules?.ToList();
             Quantity = 1;
             UnitPrice = item.UnitPrice;
         }
@@ -33,7 +33,7 @@ namespace ShoppingBasket
         {
             Name = item.Name;
             Id = item.Id;
-            taxRules = item.TaxRules.ToList();
+            taxRules = item.TaxRules?.ToList();
             Quantity = quantity;
             UnitPrice = item.UnitPrice;
         }
