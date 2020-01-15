@@ -22,6 +22,8 @@ namespace ShoppingBasket
 
         public decimal Total => throw new NotImplementedException();
 
+        public decimal UnitPrice => throw new NotImplementedException();
+
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
         public ShoppingBasketItem (IShoppingItem item)

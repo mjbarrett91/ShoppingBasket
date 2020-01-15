@@ -7,5 +7,6 @@ namespace ShoppingBasket.Interfaces
         long Id { get; }
         string Name { get; }
         IEnumerable<ITaxRule> TaxRules { get; }
+        decimal UnitPrice { get; }
     }
 }

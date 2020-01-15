@@ -9,6 +9,6 @@ namespace ShoppingBasket
         public long Id => 2;
         public string Name => "Camembert";
         public IEnumerable<ITaxRule> TaxRules => tax.TaxRules.TenPercentTax as List<ITaxRule>;
-
+        public decimal UnitPrice => throw new System.NotImplementedException();
     }
 }
