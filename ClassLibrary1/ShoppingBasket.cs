@@ -37,7 +37,6 @@ namespace ShoppingBasket
             }
 
             Basket.Add(itemToAdd);
-            GetBasketTax();
             return itemToAdd;
         }
 
