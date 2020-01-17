@@ -11,14 +11,18 @@ namespace ShoppingBasket
         public long Id { get; }
         public string Name { get; }
         public decimal UnitPrice { get; }
-        public IEnumerable<ITaxRule> TaxRules { get => taxRules; }
-        private readonly IEnumerable<ITaxRule> taxRules;
+        public IEnumerable<ITaxRule> TaxRules { get; }
 
         public decimal SubTotal => GetItemSubTotal();
         public decimal Tax => GetItemTax();
         public decimal Total => GetItemTotal();
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
+        public virtual void OnUpdate() => Updated?.Invoke(this, new ShoppingUpdatedEventArgs());
+
+        public ShoppingBasketItem()
+        {
+        }
 
         public ShoppingBasketItem(IShoppingItem item)
         {
@@ -26,7 +30,8 @@ namespace ShoppingBasket
             Id = item.Id;
             Quantity = 1;
             UnitPrice = item.UnitPrice;
-            taxRules = item.TaxRules;
+            TaxRules = item.TaxRules;
+            OnUpdate();
         }
 
         public ShoppingBasketItem(IShoppingItem item, int quantity)
@@ -35,7 +40,8 @@ namespace ShoppingBasket
             Id = item.Id;
             Quantity = quantity;
             UnitPrice = item.UnitPrice;
-            taxRules = item.TaxRules;
+            TaxRules = item.TaxRules;
+            OnUpdate();
         }
 
         private decimal GetItemSubTotal()
@@ -45,7 +51,6 @@ namespace ShoppingBasket
 
         private decimal GetItemTax()
         {
-            //var basket = new ShoppingBasket();
             var itemTax = new decimal();
             foreach (var taxRule in TaxRules)
             {

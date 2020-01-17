@@ -18,9 +18,20 @@ namespace ShoppingBasket
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
 
+        private IShoppingBasketItem shoppingBasketItem;
+
         public ShoppingBasket()
         {
             Basket = new List<IShoppingBasketItem>();
+            shoppingBasketItem = new ShoppingBasketItem() as IShoppingBasketItem;
+            shoppingBasketItem.Updated += (sender, args) => CalculateTotalsOnUpdate(sender, args);
+        }
+
+        private void CalculateTotalsOnUpdate(object sender, ShoppingUpdatedEventArgs args)
+        {
+            GetBasketSubTotal();
+            GetBasketTax();
+            GetBasketTotal();
         }
 
         public IShoppingBasketItem AddItem(IShoppingItem item)
@@ -35,11 +46,9 @@ namespace ShoppingBasket
                 Basket.Add(itemExists);
                 return itemExists;
             }
-
             Basket.Add(itemToAdd);
             return itemToAdd;
         }
-
 
         public IShoppingBasketItem AddItem(IShoppingItem item, int quantity)
         {
