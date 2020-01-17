@@ -58,7 +58,6 @@ namespace ShoppingBasket
                 return itemExists;
             }
             Basket.Add(itemToAdd);
-            GetBasketTax();
             return itemToAdd;
         }
 
@@ -80,7 +79,7 @@ namespace ShoppingBasket
             var subTotal = new decimal(0);
             foreach (var basketItems in Items)
             {
-                subTotal += basketItems.SubTotal * 1; 
+                subTotal += basketItems.SubTotal; 
             }
             return subTotal;
         }

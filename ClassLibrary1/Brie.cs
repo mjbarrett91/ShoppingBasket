@@ -4,17 +4,17 @@ using tax = ShoppingBasket;
 
 namespace ShoppingBasket
 {
-    public class Camembert : IShoppingItem
+    public class Brie : IShoppingItem
     {
-        public long Id => 2;
-        public string Name => "Camembert";
-        public decimal UnitPrice => 20m;
+        public long Id => 3;
+        public string Name => "Brie";
+        public decimal UnitPrice => 10m;
         public IEnumerable<ITaxRule> TaxRules => taxRules;
         private readonly List<ITaxRule> taxRules = new List<ITaxRule>();
 
-        public Camembert()
+        public Brie()
         {
-            taxRules.Add(tax.TaxRules.TenPercentTax);
+            taxRules.Add(tax.TaxRules.NoTax);
         }
     }
 }
