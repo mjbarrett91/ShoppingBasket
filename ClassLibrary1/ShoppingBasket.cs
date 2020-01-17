@@ -33,12 +33,11 @@ namespace ShoppingBasket
                 Basket.Remove(itemExists);
                 itemExists.Quantity++;
                 Basket.Add(itemExists);
-                //Updated();
                 return itemExists;
             }
 
             Basket.Add(itemToAdd);
-            //Updated();
+            GetBasketTax();
             return itemToAdd;
         }
 
@@ -51,17 +50,16 @@ namespace ShoppingBasket
             if (itemExists != null)
             {
                 Basket.Remove(itemExists);
-                itemExists.Quantity = itemExists.Quantity + quantity;
+                itemExists.Quantity += quantity;
                 if (itemExists.Quantity <= 0)
                 {
                     throw new ArgumentOutOfRangeException($"The item {itemExists.Name} had a quantity of {itemExists.Quantity}, this cannot be less than or equal to 0");
                 }
                 Basket.Add(itemExists);
-                //Updated();
                 return itemExists;
             }
             Basket.Add(itemToAdd);
-            //Updated();
+            GetBasketTax();
             return itemToAdd;
         }
 
@@ -72,12 +70,10 @@ namespace ShoppingBasket
             if (itemExists != null)
             {
                 Basket.Remove(itemExists);
-                //Updated();
                 return itemExists;
             }
 
             Basket.Add(item);
-            //Updated();
             return item;
         }
         private decimal GetBasketSubTotal()
@@ -85,7 +81,7 @@ namespace ShoppingBasket
             var subTotal = new decimal(0);
             foreach (var basketItems in Items)
             {
-                subTotal += basketItems.SubTotal * 1; //basketItems.Price????? // No Price exists anywhere?
+                subTotal += basketItems.SubTotal * 1; 
             }
             return subTotal;
         }
@@ -102,12 +98,11 @@ namespace ShoppingBasket
         private decimal GetBasketTax()
         {
             var tax = new decimal(0);
-            foreach (var basketItems in Items)
+            foreach (var basketItem in Items)
             {
-                foreach (var taxRule in basketItems.TaxRules)
+                foreach (var taxRule in basketItem.TaxRules)
                 {
-                    var percent = basketItems.TaxRules;
-                    tax += basketItems.Quantity * (/*taxRule */ 1); //basketItems.Price????? // No Price exists anywhere?
+                    tax += taxRule.CalculateTax(Basket as IShoppingBasket, basketItem);
                 }
             }
             return tax;

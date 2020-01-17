@@ -8,7 +8,13 @@ namespace ShoppingBasket
     {
         public long Id => 1;
         public string Name => "Cheddar";
-        public IEnumerable<ITaxRule> TaxRules { get => tax.TaxRules.NoTax as List<ITaxRule>; }
         public decimal UnitPrice => 10m;
+        public IEnumerable<ITaxRule> TaxRules => taxRules;
+        private readonly List<ITaxRule> taxRules = new List<ITaxRule>();
+
+        public Cheddar()
+        {
+            taxRules.Add(tax.TaxRules.NoTax);
+        }
     }
 }

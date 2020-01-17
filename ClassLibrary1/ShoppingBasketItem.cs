@@ -12,7 +12,7 @@ namespace ShoppingBasket
         public string Name { get; }
         public decimal UnitPrice { get; }
         public IEnumerable<ITaxRule> TaxRules { get => taxRules; }
-        private readonly List<ITaxRule> taxRules;
+        private readonly IEnumerable<ITaxRule> taxRules;
 
         public decimal SubTotal => GetItemSubTotal();
         public decimal Tax => GetItemTax();
@@ -24,18 +24,18 @@ namespace ShoppingBasket
         {
             Name = item.Name;
             Id = item.Id;
-            taxRules = item.TaxRules?.ToList();
             Quantity = 1;
             UnitPrice = item.UnitPrice;
+            taxRules = item.TaxRules;
         }
 
         public ShoppingBasketItem(IShoppingItem item, int quantity)
         {
             Name = item.Name;
             Id = item.Id;
-            taxRules = item.TaxRules?.ToList();
             Quantity = quantity;
             UnitPrice = item.UnitPrice;
+            taxRules = item.TaxRules;
         }
 
         private decimal GetItemSubTotal()
@@ -49,8 +49,8 @@ namespace ShoppingBasket
             var itemTax = new decimal();
             foreach (var taxRule in TaxRules)
             {
-                itemTax += taxRule.CalculateTax(null, this);
-            };
+                itemTax += taxRule.CalculateTax(basket, this);
+            }
             return itemTax;
         }
 
