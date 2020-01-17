@@ -102,7 +102,7 @@ namespace ShoppingBasket
             {
                 foreach (var taxRule in basketItem.TaxRules)
                 {
-                    tax += taxRule.CalculateTax(Basket as IShoppingBasket, basketItem);
+                    tax += taxRule.CalculateTax(this as IShoppingBasket, basketItem);
                 }
             }
             return tax;

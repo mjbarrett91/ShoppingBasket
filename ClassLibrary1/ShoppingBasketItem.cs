@@ -45,11 +45,11 @@ namespace ShoppingBasket
 
         private decimal GetItemTax()
         {
-            var basket = new ShoppingBasket();
+            //var basket = new ShoppingBasket();
             var itemTax = new decimal();
             foreach (var taxRule in TaxRules)
             {
-                itemTax += taxRule.CalculateTax(basket, this);
+                itemTax += taxRule.CalculateTax(null, this);
             }
             return itemTax;
         }
