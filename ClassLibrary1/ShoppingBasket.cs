@@ -11,14 +11,12 @@ namespace ShoppingBasket
         private List<IShoppingBasketItem> Basket;
 
         public decimal SubTotal => GetBasketSubTotal();
-
         public decimal Tax => GetBasketTax();
-
         public decimal Total => GetBasketTotal();
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
-
-        private IShoppingBasketItem shoppingBasketItem;
+        public virtual void OnBasketUpdate() => Updated?.Invoke(this, new ShoppingUpdatedEventArgs());
+        private readonly IShoppingBasketItem shoppingBasketItem;
 
         public ShoppingBasket()
         {
