@@ -8,7 +8,7 @@ namespace ShoppingBasket
         private readonly decimal Percentage;
         public ItemSubTotalPercentageTaxRule(decimal percentage)
         {
-            Percentage = percentage;
+            Percentage = percentage/100;
         }
 
         //Please provide the implementation of this type to calculate the tax as a percentage of the sub total for the item
