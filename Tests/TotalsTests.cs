@@ -1,7 +1,6 @@
 using FluentAssertions;
 using ShoppingBasket;
 using ShoppingBasket.Interfaces;
-using System;
 using System.Linq;
 using Xunit;
 
@@ -15,7 +14,7 @@ namespace Tests
         {
             BeforeTest();
             var item = new Cheddar() as IShoppingItem;
-            shoppingBasket.AddItem(item,1);
+            shoppingBasket.AddItem(item, 1);
             shoppingBasket.SubTotal.Should().Be(shoppingBasket.Items.FirstOrDefault().UnitPrice);
             shoppingBasket.Total.Should().Be(shoppingBasket.Items.FirstOrDefault().UnitPrice);
             shoppingBasket.Items.FirstOrDefault().SubTotal.Should().Be(shoppingBasket.Items.FirstOrDefault().UnitPrice);
@@ -52,7 +51,7 @@ namespace Tests
             shoppingBasket.SubTotal.Should().Be(105m);
             shoppingBasket.Total.Should().Be(105m);
             shoppingBasket.Tax.Should().Be(0m);
-            foreach(var item in shoppingBasket.Items)
+            foreach (var item in shoppingBasket.Items)
             {
                 item.SubTotal.Should().Be(item.UnitPrice * item.Quantity);  //Not what is asked for, but is correct
                 item.Total.Should().Be(item.UnitPrice * item.Quantity);     //Not what is asked for, but is correct

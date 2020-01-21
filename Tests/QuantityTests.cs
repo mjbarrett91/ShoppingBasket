@@ -39,8 +39,8 @@ namespace Tests
             BeforeTest();
             var item1 = new Cheddar() as IShoppingItem;
             var item2 = new Camembert() as IShoppingItem;
-            shoppingBasket.AddItem(item1,5);
-            shoppingBasket.AddItem(item2,10);
+            shoppingBasket.AddItem(item1, 5);
+            shoppingBasket.AddItem(item2, 10);
             shoppingBasket.Items.Count().Should().Be(2);
             shoppingBasket.Items.FirstOrDefault(x => x.Id == item1.Id).Quantity.Should().Be(5);
             shoppingBasket.Items.FirstOrDefault(x => x.Id == item2.Id).Quantity.Should().Be(10);
