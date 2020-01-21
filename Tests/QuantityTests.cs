@@ -122,5 +122,19 @@ namespace Tests
             shoppingBasket.Items.FirstOrDefault().Quantity.Should().Be(1);
             AfterTest();
         }
+
+
+        [Fact]
+        public void TEST()
+        {
+            BeforeTest();
+            var item = new Cheddar() as IShoppingItem;
+            shoppingBasket.AddItem(item);
+            shoppingBasket.Items.FirstOrDefault(x => x.Id == item.Id).Quantity.Should().Be(1);
+            shoppingBasket.SubTotal.Should().Be(5);
+            shoppingBasket.Items.FirstOrDefault().Quantity = 10;
+            shoppingBasket.SubTotal.Should().Be(50);
+            AfterTest();
+        }
     }
 }

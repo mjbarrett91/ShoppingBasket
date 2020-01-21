@@ -17,21 +17,10 @@ namespace ShoppingBasket
         public decimal Total => GetBasketTotal();
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
-
-        private IShoppingBasketItem shoppingBasketItem;
+        protected virtual void OnUpdate() => Updated?.Invoke(this, new ShoppingUpdatedEventArgs());
 
         public ShoppingBasket()
         {
-            Basket = new List<IShoppingBasketItem>();
-            shoppingBasketItem = new ShoppingBasketItem() as IShoppingBasketItem;
-            shoppingBasketItem.Updated += (sender, args) => CalculateTotalsOnUpdate(sender, args);
-        }
-
-        private void CalculateTotalsOnUpdate(object sender, ShoppingUpdatedEventArgs args)
-        {
-            GetBasketSubTotal();
-            GetBasketTax();
-            GetBasketTotal();
         }
 
         public IShoppingBasketItem AddItem(IShoppingItem item)
@@ -44,9 +33,11 @@ namespace ShoppingBasket
                 Basket.Remove(itemExists);
                 itemExists.Quantity++;
                 Basket.Add(itemExists);
+                OnUpdate();
                 return itemExists;
             }
             Basket.Add(itemToAdd);
+            OnUpdate();
             return itemToAdd;
         }
 
@@ -64,9 +55,11 @@ namespace ShoppingBasket
                     throw new ArgumentOutOfRangeException($"The item {itemExists.Name} had a quantity of {itemExists.Quantity}, this cannot be less than or equal to 0");
                 }
                 Basket.Add(itemExists);
+                OnUpdate();
                 return itemExists;
             }
             Basket.Add(itemToAdd);
+            OnUpdate();
             return itemToAdd;
         }
 
@@ -77,10 +70,12 @@ namespace ShoppingBasket
             if (itemExists != null)
             {
                 Basket.Remove(itemExists);
+                OnUpdate();
                 return itemExists;
             }
 
             Basket.Add(item);
+            OnUpdate();
             return item;
         }
         private decimal GetBasketSubTotal()
