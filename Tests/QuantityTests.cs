@@ -123,17 +123,39 @@ namespace Tests
             AfterTest();
         }
 
-
+        //Add Items To Give Negative Quantity
         [Fact]
-        public void TEST()
+        public void AddItemsToGiveNegativeQuantity()
         {
             BeforeTest();
-            var item = new Cheddar() as IShoppingItem;
-            shoppingBasket.AddItem(item);
-            shoppingBasket.Items.FirstOrDefault(x => x.Id == item.Id).Quantity.Should().Be(1);
-            shoppingBasket.SubTotal.Should().Be(5);
-            shoppingBasket.Items.FirstOrDefault().Quantity = 10;
-            shoppingBasket.SubTotal.Should().Be(50);
+            var item1 = new Cheddar() as IShoppingItem;
+            try
+            {
+                shoppingBasket.AddItem(item1, 1);
+                shoppingBasket.Items.FirstOrDefault().Quantity.Should().Be(1);
+                shoppingBasket.AddItem(item1, -5);
+            }
+            catch (Exception ex)
+            {
+                ex.Should().BeOfType(typeof(ArgumentOutOfRangeException));
+            }
+            AfterTest();
+        }
+
+        //Add Item With Negative Quantity
+        [Fact]
+        public void AddItemWithNegativeQuantity()
+        {
+            BeforeTest();
+            var item1 = new Cheddar() as IShoppingItem;
+            try
+            {
+                shoppingBasket.AddItem(item1, -5);
+            }
+            catch (Exception ex)
+            {
+                ex.Should().BeOfType(typeof(ArgumentOutOfRangeException));
+            }
             AfterTest();
         }
     }

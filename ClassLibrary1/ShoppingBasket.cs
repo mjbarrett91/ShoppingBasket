@@ -11,9 +11,7 @@ namespace ShoppingBasket
         private List<IShoppingBasketItem> Basket;
 
         public decimal SubTotal => GetBasketSubTotal();
-
         public decimal Tax => GetBasketTax();
-
         public decimal Total => GetBasketTotal();
 
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
