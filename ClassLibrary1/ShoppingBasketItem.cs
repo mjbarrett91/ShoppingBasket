@@ -19,9 +19,7 @@ namespace ShoppingBasket
         public event EventHandler<ShoppingUpdatedEventArgs> Updated;
         public virtual void OnUpdate() => Updated?.Invoke(this, new ShoppingUpdatedEventArgs());
 
-        public ShoppingBasketItem()
-        {
-        }
+        public ShoppingBasketItem() { }
 
         public ShoppingBasketItem(IShoppingItem item)
         {

@@ -81,7 +81,7 @@ namespace ShoppingBasket
             var subTotal = new decimal(0);
             foreach (var basketItems in Items)
             {
-                subTotal += basketItems.SubTotal; 
+                subTotal += basketItems.SubTotal;
             }
             return subTotal;
         }

@@ -4,6 +4,5 @@ namespace ShoppingBasket
 {
     public class ShoppingUpdatedEventArgs : EventArgs
     {
-
     }
 }
